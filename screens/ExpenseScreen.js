@@ -2,17 +2,18 @@ import React from 'react';
 import {View,TouchableOpacity,Text,TextInput,StyleSheet,Alert,KeyboardAvoidingView,Modal,ScrollView} from 'react-native';
 import db from "../config";
 import firebase from 'firebase';
+import MyHeader from '../components/MyHeader';
 
 export default class ExpenseScreen extends React.Component{
   constructor(){
     super();
     this.state={
       user_id: firebase.auth().currentUser.email,
-      rent:'',
-      shopping:'',
-      tourTravel:'',
-      rashan:'',
-      electricityBill:''
+      rent:null,
+      shopping:null,
+      tourTravel:null,
+      rashan:null,
+      electricityBill:null
     }
   }
   createUniqueId(){
@@ -20,23 +21,23 @@ export default class ExpenseScreen extends React.Component{
   }
 
   submitData= async(rent,shopping,tourTravel,rashan,electricityBill,user_id)=>{
-    var user_id = this.state.user_id
+    var user_id = this.state.user_id;
     var randomRequest_id=this.createUniqueId();
     db.collection('Expense_data').add({
       "user_id":user_id,
-      "randomRequest_id":randomRequest_id,
       "Rent":rent,
       "TourAndTravel" : tourTravel,
       "ElectricityBill":electricityBill,
       "Shopping":shopping,
-      "Rashan":rashan
+      "Rashan":rashan,
+      "randomRequest_id":randomRequest_id,
     })
     this.setState({
-      rent:'',
-      shopping:'',
-      electricityBill:'',
-      tourTravel:'',
-      rashan:''
+      rent:0,
+      shopping:0,
+      electricityBill:0,
+      tourTravel:0,
+      rashan:0
     });
     return Alert.alert('Data Submitted Successfully',
     '',
@@ -45,14 +46,13 @@ export default class ExpenseScreen extends React.Component{
         this.props.navigation.navigate('Calculation');
       }}
     ])
-
   }
+    
   render(){
     return(
-      <View style={{flex:1}}>
-         <View style={{justifyContent:'center', alignItems:'center'}}>
-         <Text style= {styles.title}> Expenses Screen </Text>
-         </View>
+        <View style={{flex:1}}>
+        {/* <MyHeader title="Expense" navigation ={this.props.navigation}/> */}
+        <View style={{flex:1}}>
             <KeyboardAvoidingView style={styles.keyBoardStyle}>
             <Text style={{color:'#F87217',fontSize:20,}}> Rent</Text>
             <TextInput
@@ -126,12 +126,15 @@ export default class ExpenseScreen extends React.Component{
 
             <TouchableOpacity
                 style={styles.button}
-                onPress={()=>{this.submitData(this.state.rent,this.state.user_id,this.state.electricityBill,this.state.shopping,this.state.tourTravel,this.state.rashan)}}
+                onPress={()=>{this.submitData(this.state.rent,this.state.electricityBill,
+                  this.state.shopping,this.state.tourTravel,this.state.rashan,this.state.user_id)}}
                 >
                 <Text>Submit</Text>
               </TouchableOpacity>
               </KeyboardAvoidingView>
         </View>
+        </View>
+        
         
     );
   }
@@ -157,7 +160,7 @@ const styles = StyleSheet.create({
     borderColor:'#98AFC7',
     borderRadius:10,
     borderWidth:1,
-    marginTop:20,
+    marginTop:5,
     padding:10,
   },
   button:{
