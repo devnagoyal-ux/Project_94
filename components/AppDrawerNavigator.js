@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { Component } from "react";
 import {createDrawerNavigator} from 'react-navigation-drawer';
 import { AppTabNavigator } from './AppTabNavigator';
+import CustomSideBarMenu  from './CustomSideBarMenu';
 import { Icon } from "react-native-elements";
-import IncomeScreen from '../screens/IncomeScreen';
-import ExpenseScreen from '../screens/ExpenseScreen';
+import CalculationScreen from '../screens/CalculationScreen';
 
 export const AppDrawerNavigator = createDrawerNavigator({
   Home : {
@@ -12,21 +12,13 @@ export const AppDrawerNavigator = createDrawerNavigator({
       drawerIcon : <Icon name="home" type ="fontawesome5" />
     }
     },
-    Income : {
-    screen : IncomeScreen,
-    navigationOptions:{
-      drawerIcon : <Icon name="gift" type ="font-awesome" />,
-      drawerLabel : "My Donations"
+    Calculation : {
+      screen : CalculationScreen
     }
   },
-  Expense : {
-    screen : ExpenseScreen,
-    navigationOptions:{
-      drawerIcon : <Icon name="bell" type ="font-awesome" />,
-      drawerLabel : "Notifications"
-    }
-  },
-},
-     {
-    initialRouteName : 'Home'
-  })
+    {
+      contentComponent:CustomSideBarMenu
+    },
+    {
+      initialRouteName : 'Home'
+    })
