@@ -2,6 +2,7 @@ import React from 'react';
 import {View,TouchableOpacity,Text,TextInput,StyleSheet,Alert,KeyboardAvoidingView,Modal,ScrollView} from 'react-native';
 import db from "../config";
 import firebase from 'firebase';
+import MyHeader from '../components/MyHeader';
 
 export default class IncomeScreen extends React.Component{
   constructor(){
@@ -9,7 +10,7 @@ export default class IncomeScreen extends React.Component{
     this.state={
       userId: firebase.auth().currentUser.email,
       incomeTitle:'',
-      income:''
+      income:null
     }
   }
 
@@ -44,9 +45,8 @@ export default class IncomeScreen extends React.Component{
   render(){
     return(
       <View style={{flex:1}}>
-         <View style={{justifyContent:'center', alignItems:'center'}}>
-         <Text style= {styles.title}> Income Screen </Text>
-         </View>
+        <MyHeader title="Income" navigation ={this.props.navigation}/>
+        <View style={{flex:1}}>
             <KeyboardAvoidingView style={styles.keyBoardStyle}>
               <TextInput
                 style ={styles.formTextInput}
@@ -77,6 +77,7 @@ export default class IncomeScreen extends React.Component{
                 <Text>Submit</Text>
               </TouchableOpacity>
               </KeyboardAvoidingView>
+              </View>
               </View>
     );
   }
