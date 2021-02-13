@@ -314,7 +314,7 @@ const styles = StyleSheet.create({
    alignItems:'center',
    borderRadius:25,
    backgroundColor:"#F75D59",
-   shadowColor: "#000",
+   shadowColor: "#000" ,
    shadowOffset: {
       width: 0,
       height: 8,
